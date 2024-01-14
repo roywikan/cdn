@@ -195,7 +195,7 @@ var wpServerlessSearch = (function () {
     });
   }
 
-  function postContent(
+  function postContentX(
     postContentData = {
       title: '',
       excerpt: '',
@@ -208,6 +208,17 @@ var wpServerlessSearch = (function () {
       </header>
     </article>`;
   }
+
+      function postContent(postContentData = { title: '', excerpt: '', link: '' }) {
+        const searchKeyword = encodeURIComponent(jQuery(searchParams.searchFormInput).val()).replace(/%20/g, '+');
+        const linkWithSuffix = `${postContentData.link}?lowongan=${searchKeyword}`;
+        
+        return `<article>
+            <header class='entry-header'>
+                <h2 class='entry-title'><a target='_blank' href='${linkWithSuffix}' rel='bookmark'>${postContentData.title}</a></h2>
+            </header>
+        </article>`;
+    }
 
   // onSearchInput();
   searchPosts();
