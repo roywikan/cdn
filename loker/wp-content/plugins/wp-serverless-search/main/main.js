@@ -209,7 +209,7 @@ var wpServerlessSearch = (function () {
     </article>`;
   }
 
-      function postContent(postContentData = { title: '', excerpt: '', link: '' }) {
+      function postContentY(postContentData = { title: '', excerpt: '', link: '' }) {
         const searchKeyword = encodeURIComponent(jQuery(searchParams.searchFormInput).val()).replace(/%20/g, '+');
         const linkWithSuffix = `${postContentData.link}?lowongan=${searchKeyword}`;
         
@@ -219,6 +219,26 @@ var wpServerlessSearch = (function () {
             </header>
         </article>`;
     }
+
+  function postContent(postContentData = { title: '', excerpt: '', link: '' }) {
+    const searchForm = document.querySelector('form.search-form');
+    const searchInput = searchForm ? searchForm.querySelector('.wp-sls-search-field') : null;
+
+    if (!searchInput) {
+        console.error('Search input not found.');
+        return '';
+    }
+
+    const searchKeyword = encodeURIComponent(searchInput.value.trim()).replace(/%20/g, '+');
+    const linkWithSuffix = `${postContentData.link}?lowongan=${searchKeyword}`;
+
+    return `<article>
+        <header class='entry-header'>
+            <h2 class='entry-title'><a href='${linkWithSuffix}' rel='bookmark'>${postContentData.title}</a></h2>
+        </header>
+    </article>`;
+}
+
 
   // onSearchInput();
   searchPosts();
